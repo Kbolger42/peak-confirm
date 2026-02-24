@@ -1,10 +1,164 @@
-
-
-Peak Party Rentals
-Take your events to greater heights
-
-We Got Your Request!
-One of our event specialists will reach out to you shortly to bring your vision to reality.
-Questions? Call us directly: (215) 385-4040
-Peak Party Rentals
-© 2025 · PA, NJ & DE
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peak Party Rentals</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;
+  800&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'DM Sans',sans-serif;
+      background:#f0f4f6;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+    .card {
+      background:#fff;
+      border-radius:16px;
+      max-width:480px;
+      width:100%;
+      overflow:hidden;
+      box-shadow:0 8px 40px rgba(0,0,0,0.1);
+      text-align:center;
+      animation: fadeUp 0.5s ease-out;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .brand-bar { display:flex; height:6px; }
+    .brand-bar span:first-child { flex:1; background:#0093c7; }
+    .brand-bar span:last-child  { flex:1; background:#41b8ea; }
+    .header {
+      background:linear-gradient(160deg,#e8f7fd 0%,#c8ecf8 45%,#d8f3fc 100%);
+      padding:28px 24px 22px;
+      border-bottom:3px solid #0093c7;
+    }
+    .header h1 { font-size:20px; font-weight:800; color:#0093c7;
+  letter-spacing:-0.3px; }
+    .header p { font-size:10px; font-style:italic; color:#5a9ab8;
+  margin-top:3px; }
+    .body { padding:36px 28px 32px; }
+    .check {
+      width:64px; height:64px; border-radius:50%;
+      background:linear-gradient(135deg,#0093c7,#41b8ea);
+      display:flex; align-items:center; justify-content:center;
+      margin:0 auto 20px;
+      animation: popIn 0.4s ease-out 0.2s both;
+    }
+    @keyframes popIn {
+      from { transform:scale(0); }
+      50%  { transform:scale(1.15); }
+      to   { transform:scale(1); }
+    }
+    .check svg { width:32px; height:32px; }
+    .body h2 { font-size:20px; font-weight:800; color:#0d1c26;
+  margin-bottom:10px; letter-spacing:-0.3px; }
+    .body .msg { font-size:14px; color:#5a7a88; line-height:1.7;
+  margin-bottom:24px; }
+    .action-label {
+      display:inline-block; background:#f0fafd; border:1px solid #b3dff0;
+      border-radius:20px; padding:6px 16px; font-size:12px; font-weight:700;
+      color:#0093c7; margin-bottom:20px;
+    }
+    .event-details {
+      background:#f0fafd; border:1px solid #b3dff0; border-left:4px solid
+  #0093c7;
+      border-radius:8px; padding:14px 18px; margin-bottom:24px;
+      text-align:left; font-size:13px; color:#1e2d35; line-height:1.8;
+    }
+    .event-details .label { color:#5a7a88; font-size:12px; min-width:70px;
+  display:inline-block; }
+    .event-details .val { font-weight:600; }
+    .phone { margin-top:20px; font-size:13px; color:#5a7a88; }
+    .phone a { color:#0093c7; font-weight:700; text-decoration:none; }
+    .footer {
+      background:#0d1c26; padding:14px 24px;
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .footer .name { font-size:12px; font-weight:700; color:#41b8ea; }
+    .footer .copy { font-size:11px; color:rgba(255,255,255,0.35); }
+  </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="brand-bar"><span></span><span></span></div>
+      <div class="header">
+        <h1>Peak Party Rentals</h1>
+        <p>Take your events to greater heights</p>
+      </div>
+      <div class="body">
+        <div class="check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" 
+  stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4
+  12"/></svg>
+        </div>
+        <div id="action-badge" class="action-label"></div>
+        <h2>We Got Your Request!</h2>
+        <p class="msg">One of our event specialists will reach out to you
+  shortly to bring your vision to reality.</p>
+        <div id="event-box" class="event-details" style="display:none;"></div>
+        <div class="phone">Questions? Call us directly: <a 
+  href="tel:+12153854040">(215) 385-4040</a></div>
+      </div>
+      <div class="footer">
+        <span class="name">Peak Party Rentals</span>
+        <span class="copy">&copy; 2025 &middot; PA, NJ &amp; DE</span>
+      </div>
+    </div>
+    <script>
+      var params = new URLSearchParams(window.location.search);
+      var action = params.get('action') || 'approve';
+      var event  = params.get('event')  || 'My Event';
+      var type   = params.get('type')   || '';
+      var date   = params.get('date')   || '';
+      var venue  = params.get('venue')  || '';
+      var tent   = params.get('tent')   || '';
+      var guests = params.get('guests') || '';
+      var eventBox = document.getElementById('event-box');
+      var details = [];
+      if (event && event !== 'My Event') details.push('<span
+  class="label">Event:</span> <span class="val">' + event + (type ? ' \u2014 ' +
+   type : '') + '</span>');
+      if (date)   details.push('<span class="label">Date:</span> <span
+  class="val">' + date + '</span>');
+      if (venue)  details.push('<span class="label">Venue:</span> <span
+  class="val">' + venue + '</span>');
+      if (tent)   details.push('<span class="label">Tent:</span> <span
+  class="val">' + tent.replace('x',' x ') + ' ft</span>');
+      if (guests) details.push('<span class="label">Guests:</span> <span
+  class="val">' + guests + '</span>');
+      if (details.length > 0) { eventBox.innerHTML = details.join('<br>');
+  eventBox.style.display = 'block'; }
+      var badge = document.getElementById('action-badge');
+      var labels = { approve: '\u2705 Layout Approved', changes: '\u270F\uFE0F
+  Changes Requested', upgrades: '\u2B50 Upgrades Requested' };
+      badge.textContent = labels[action] || labels.approve;
+      var formData = new FormData();
+      formData.append('_subject', (action === 'approve' ? 'Layout Approved' :
+  action === 'changes' ? 'Changes Requested' : 'Upgrades Requested') + ' \u2014
+  ' + event);
+      formData.append('Response', action === 'approve' ? 'Layout Approved' :
+  action === 'changes' ? 'Changes Requested' : 'Upgrades Requested');
+      formData.append('Event', event + (type ? ' \u2014 ' + type : ''));
+      if (date)   formData.append('Date', date);
+      if (venue)  formData.append('Venue', venue);
+      if (tent)   formData.append('Tent', tent.replace('x',' x ') + ' ft');
+      if (guests) formData.append('Guests', guests);
+      formData.append('_captcha', 'false');
+      formData.append('_template', 'table');
+      fetch('https://formsubmit.co/ajax/events@peakpartyrentals.com', {
+        method: 'POST',
+        body: formData
+      }).then(function(res) { return res.json(); }).then(function(data) {
+        console.log('Notification sent:', data);
+      }).catch(function(err) { console.log('Notification send failed:', err);
+  });
+    </script>
+  </body>
+  </html>
