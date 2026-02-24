@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-  <html lang="en">
-  <head>
-  <meta charset="UTF-8">
+ <!DOCTYPE html>                                                               
+  <html lang="en">                                          
+  <head>                                                                        
+  <meta charset="UTF-8">                                                        
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Peak Party Rentals</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;
@@ -31,7 +31,9 @@
       from { opacity:0; transform:translateY(20px); }
       to   { opacity:1; transform:translateY(0); }
     }
-    .brand-bar { display:flex; height:6px; }
+    .brand-bar {
+      display:flex; height:6px;
+    }
     .brand-bar span:first-child { flex:1; background:#0093c7; }
     .brand-bar span:last-child  { flex:1; background:#41b8ea; }
     .header {
@@ -39,10 +41,12 @@
       padding:28px 24px 22px;
       border-bottom:3px solid #0093c7;
     }
-    .header h1 { font-size:20px; font-weight:800; color:#0093c7;
-  letter-spacing:-0.3px; }
-    .header p { font-size:10px; font-style:italic; color:#5a9ab8;
-  margin-top:3px; }
+    .header h1 {
+      font-size:20px; font-weight:800; color:#0093c7; letter-spacing:-0.3px;
+    }
+    .header p {
+      font-size:10px; font-style:italic; color:#5a9ab8; margin-top:3px;
+    }
     .body { padding:36px 28px 32px; }
     .check {
       width:64px; height:64px; border-radius:50%;
@@ -57,29 +61,61 @@
       to   { transform:scale(1); }
     }
     .check svg { width:32px; height:32px; }
-    .body h2 { font-size:20px; font-weight:800; color:#0d1c26;
-  margin-bottom:10px; letter-spacing:-0.3px; }
-    .body .msg { font-size:14px; color:#5a7a88; line-height:1.7;
-  margin-bottom:24px; }
+    .body h2 {
+      font-size:20px; font-weight:800; color:#0d1c26; margin-bottom:10px;
+  letter-spacing:-0.3px;
+    }
+    .body .msg {
+      font-size:14px; color:#5a7a88; line-height:1.7; margin-bottom:24px;
+    }
     .action-label {
-      display:inline-block; background:#f0fafd; border:1px solid #b3dff0;
-      border-radius:20px; padding:6px 16px; font-size:12px; font-weight:700;
-      color:#0093c7; margin-bottom:20px;
+      display:inline-block;
+      background:#f0fafd;
+      border:1px solid #b3dff0;
+      border-radius:20px;
+      padding:6px 16px;
+      font-size:12px;
+      font-weight:700;
+      color:#0093c7;
+      margin-bottom:20px;
     }
     .event-details {
-      background:#f0fafd; border:1px solid #b3dff0; border-left:4px solid
-  #0093c7;
-      border-radius:8px; padding:14px 18px; margin-bottom:24px;
-      text-align:left; font-size:13px; color:#1e2d35; line-height:1.8;
+      background:#f0fafd;
+      border:1px solid #b3dff0;
+      border-left:4px solid #0093c7;
+      border-radius:8px;
+      padding:14px 18px;
+      margin-bottom:24px;
+      text-align:left;
+      font-size:13px;
+      color:#1e2d35;
+      line-height:1.8;
     }
-    .event-details .label { color:#5a7a88; font-size:12px; min-width:70px;
-  display:inline-block; }
-    .event-details .val { font-weight:600; }
-    .phone { margin-top:20px; font-size:13px; color:#5a7a88; }
-    .phone a { color:#0093c7; font-weight:700; text-decoration:none; }
+    .event-details .label {
+      color:#5a7a88;
+      font-size:12px;
+      min-width:70px;
+      display:inline-block;
+    }
+    .event-details .val {
+      font-weight:600;
+    }
+    .phone {
+      margin-top:20px;
+      font-size:13px;
+      color:#5a7a88;
+    }
+    .phone a {
+      color:#0093c7;
+      font-weight:700;
+      text-decoration:none;
+    }
     .footer {
-      background:#0d1c26; padding:14px 24px;
-      display:flex; justify-content:space-between; align-items:center;
+      background:#0d1c26;
+      padding:14px 24px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
     }
     .footer .name { font-size:12px; font-weight:700; color:#41b8ea; }
     .footer .copy { font-size:11px; color:rgba(255,255,255,0.35); }
@@ -105,12 +141,15 @@
         <div id="event-box" class="event-details" style="display:none;"></div>
         <div class="phone">Questions? Call us directly: <a 
   href="tel:+12153854040">(215) 385-4040</a></div>
+        <div id="debug-status" 
+  style="margin-top:12px;font-size:10px;color:#aaa;"></div>
       </div>
       <div class="footer">
         <span class="name">Peak Party Rentals</span>
         <span class="copy">&copy; 2025 &middot; PA, NJ &amp; DE</span>
       </div>
     </div>
+
     <script>
       var params = new URLSearchParams(window.location.search);
       var action = params.get('action') || 'approve';
@@ -120,6 +159,8 @@
       var venue  = params.get('venue')  || '';
       var tent   = params.get('tent')   || '';
       var guests = params.get('guests') || '';
+
+      // Show event details box
       var eventBox = document.getElementById('event-box');
       var details = [];
       if (event && event !== 'My Event') details.push('<span
@@ -133,32 +174,60 @@
   class="val">' + tent.replace('x',' x ') + ' ft</span>');
       if (guests) details.push('<span class="label">Guests:</span> <span
   class="val">' + guests + '</span>');
-      if (details.length > 0) { eventBox.innerHTML = details.join('<br>');
-  eventBox.style.display = 'block'; }
+      if (details.length > 0) {
+        eventBox.innerHTML = details.join('<br>');
+        eventBox.style.display = 'block';
+      }
+
+      // Set badge
       var badge = document.getElementById('action-badge');
       var labels = { approve: '\u2705 Layout Approved', changes: '\u270F\uFE0F
   Changes Requested', upgrades: '\u2B50 Upgrades Requested' };
       badge.textContent = labels[action] || labels.approve;
-      var formData = new FormData();
-      formData.append('_subject', (action === 'approve' ? 'Layout Approved' :
-  action === 'changes' ? 'Changes Requested' : 'Upgrades Requested') + ' \u2014
-  ' + event);
-      formData.append('Response', action === 'approve' ? 'Layout Approved' :
-  action === 'changes' ? 'Changes Requested' : 'Upgrades Requested');
-      formData.append('Event', event + (type ? ' \u2014 ' + type : ''));
-      if (date)   formData.append('Date', date);
-      if (venue)  formData.append('Venue', venue);
-      if (tent)   formData.append('Tent', tent.replace('x',' x ') + ' ft');
-      if (guests) formData.append('Guests', guests);
-      formData.append('_captcha', 'false');
-      formData.append('_template', 'table');
-      fetch('https://formsubmit.co/ajax/events@peakpartyrentals.com', {
-        method: 'POST',
-        body: formData
-      }).then(function(res) { return res.json(); }).then(function(data) {
-        console.log('Notification sent:', data);
-      }).catch(function(err) { console.log('Notification send failed:', err);
-  });
+
+      // Auto-send notification to Peak Party team via Web3Forms
+      function sendNotification() {
+        var payload = {
+          access_key: '39ebce54-c8ce-4e4f-a8c4-429c71ab4e5e',
+          subject: (action === 'approve' ? 'Layout Approved' : action ===
+  'changes' ? 'Changes Requested' : 'Upgrades Requested') + ' — ' + event,
+          from_name: 'Peak Party Floor Planner',
+          Response: action === 'approve' ? 'Layout Approved' : action ===
+  'changes' ? 'Changes Requested' : 'Upgrades Requested',
+          Event: event + (type ? ' — ' + type : ''),
+          Date: date || 'N/A',
+          Venue: venue || 'N/A',
+          Tent: tent ? tent.replace('x',' x ') + ' ft' : 'N/A',
+          Guests: guests || 'N/A'
+        };
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://api.web3forms.com/submit', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.onload = function() {
+          try {
+            var data = JSON.parse(xhr.responseText);
+            console.log('Notification result:', data);
+            document.getElementById('debug-status').textContent = data.success ?
+   'Sent' : 'Failed: ' + (data.message || 'unknown');
+          } catch(e) {
+            document.getElementById('debug-status').textContent = 'Error: ' +
+  xhr.status;
+          }
+        };
+        xhr.onerror = function() {
+          document.getElementById('debug-status').textContent = 'Network error';
+        };
+        xhr.send(JSON.stringify(payload));
+      }
+
+      // Fire after page fully loads
+      if (document.readyState === 'complete') {
+        sendNotification();
+      } else {
+        window.addEventListener('load', sendNotification);
+      }
     </script>
   </body>
   </html>
