@@ -1,7 +1,7 @@
- <!DOCTYPE html>                                                               
+  <!DOCTYPE html>                        
   <html lang="en">                                                              
   <head>                                                                        
-  <meta charset="UTF-8">                                                        
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Peak Party Rentals</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;
@@ -186,48 +186,33 @@
       badge.textContent = labels[action] || labels.approve;
 
       // Auto-send notification to Peak Party team via Web3Forms
-      function sendNotification() {
-        var payload = {
-          access_key: '39ebce54-c8ce-4e4f-a8c4-429c71ab4e5e',
-          subject: (action === 'approve' ? 'Layout Approved' : action ===
-  'changes' ? 'Changes Requested' : 'Upgrades Requested') + ' — ' + event,
-          from_name: 'Peak Party Floor Planner',
-          Response: action === 'approve' ? 'Layout Approved' : action ===
-  'changes' ? 'Changes Requested' : 'Upgrades Requested',
-          Event: event + (type ? ' — ' + type : ''),
-          Date: date || 'N/A',
-          Venue: venue || 'N/A',
-          Tent: tent ? tent.replace('x',' x ') + ' ft' : 'N/A',
-          Guests: guests || 'N/A'
-        };
+      document.getElementById('debug-status').textContent = 'Sending...';
 
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'https://api.web3forms.com/submit', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader('Accept', 'application/json');
-        xhr.onload = function() {
-          try {
-            var data = JSON.parse(xhr.responseText);
-            console.log('Notification result:', data);
-            document.getElementById('debug-status').textContent = data.success ?
-   'Sent' : 'Failed: ' + (data.message || 'unknown');
-          } catch(e) {
-            document.getElementById('debug-status').textContent = 'Error: ' +
-  xhr.status;
-          }
-        };
-        xhr.onerror = function() {
-          document.getElementById('debug-status').textContent = 'Network error';
-        };
-        xhr.send(JSON.stringify(payload));
-      }
+      var form = new FormData();
+      form.append('access_key', '39ebce54-c8ce-4e4f-a8c4-429c71ab4e5e');
+      form.append('subject', (action === 'approve' ? 'Layout Approved' : action
+  === 'changes' ? 'Changes Requested' : 'Upgrades Requested') + ' - ' + event);
+      form.append('from_name', 'Peak Party Floor Planner');
+      form.append('Response', action === 'approve' ? 'Layout Approved' : action
+  === 'changes' ? 'Changes Requested' : 'Upgrades Requested');
+      form.append('Event', event + (type ? ' - ' + type : ''));
+      form.append('Date', date || 'N/A');
+      form.append('Venue', venue || 'N/A');
+      form.append('Tent', tent ? tent.replace('x',' x ') + ' ft' : 'N/A');
+      form.append('Guests', guests || 'N/A');
 
-      // Fire after page fully loads
-      if (document.readyState === 'complete') {
-        sendNotification();
-      } else {
-        window.addEventListener('load', sendNotification);
-      }
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: form
+      }).then(function(res) {
+        return res.json();
+      }).then(function(data) {
+        document.getElementById('debug-status').textContent = data.success ?
+  'Sent' : 'Failed: ' + (data.message || 'unknown');
+      }).catch(function(err) {
+        document.getElementById('debug-status').textContent = 'Error: ' +
+  err.message;
+      });
     </script>
   </body>
   </html>
